@@ -100,3 +100,8 @@ Tela do game:
 
 <img width="1024" height="559" alt="image" src="https://github.com/user-attachments/assets/bd2f4d7c-1621-4551-ba2c-d037d35e96d9" />
 
+Foto do board:
+
+<img width="1043" height="561" alt="image" src="https://github.com/user-attachments/assets/b31798ba-bee4-4e8a-88a4-74646b600231" />
+
+
