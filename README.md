@@ -6,15 +6,14 @@ Este repositório contém o código-fonte de um jogo de aventura em terminal des
 
 ## Equipe 
 
-| Nome do Integrante |
-| :--- | :--- | :--- |
-| [Augusto Freitas] | 
-| [João Lucas] | 
-| [Caio Catão] | 
-| [Fernando Araújo] | 
-| [Glauberson] | 
-| [Gustavo Cassemiro] | 
-| [Daniel Massud] | 
+|Nome dos Integrantes| 
+ • Augusto Freitas  
+ • João Lucas mendes 
+ • Caio Catão  
+ • Fernando Araújo 
+ • Glauberson  
+ • Gustavo Cassemiro  
+ • Daniel Massud  
 
 ---
 
