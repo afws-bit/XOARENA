@@ -91,10 +91,6 @@ Abaixo constam as 10 histórias de usuário detalhando as funcionalidades do sis
 ### Protótipo de Baixa Fidelidade (Figma)
 - Link para o projeto: [LINK_DO_SEU_FIGMA]
 
-| US08 | [Link para Imagem] | [Link para Imagem] |
-| US09 | [Link para Imagem] | [Link para Imagem] |
-| US10 | [Link para Imagem] | [Link para Imagem] |
-
 
 Tela do game:
 
