@@ -4,18 +4,21 @@ Este repositório contém o código-fonte de um jogo de aventura em terminal des
 
 ---
 
-## Equipe e Papéis (Entrega 01)
+## Equipe 
 
-| Nome do Integrante | Papel no Projeto | Responsabilidades Principais |
+| Nome do Integrante |
 | :--- | :--- | :--- |
-| [Nome do Aluno 1] | Product Owner (PO) | Definição das histórias de usuário, priorização do backlog e garantia da entrega de valor. |
-| [Nome do Aluno 2] | Scrum Master / Dev | Aplicação das práticas ágeis, remoção de impedimentos e auxílio no desenvolvimento. |
-| [Nome do Aluno 3] | Desenvolvedor | Implementação da lógica de geração de mapa e algoritmos de movimentação. |
-| [Nome do Aluno 4] | Desenvolvedor / QA | Desenvolvimento da interface de terminal, criação de diagramas e validação de critérios de aceite. |
+| [Augusto Freitas] | 
+| [João Lucas] | 
+| [Caio Catão] | 
+| [Fernando Araújo] | 
+| [Glauberson] | 
+| [Gustavo Cassemiro] | 
+| [Daniel Massud] | 
 
 ---
 
-## Gerenciamento do Projeto: Board e Backlog (Entrega 01)
+## Gerenciamento do Projeto: Board e Backlog 
 
 O gerenciamento do ciclo de vida do projeto foi realizado via [Trello / Jira / GitHub Projects]. As histórias de usuário estão listadas abaixo seguindo a prioridade técnica para o funcionamento do sistema (MVP).
 
@@ -27,7 +30,7 @@ O gerenciamento do ciclo de vida do projeto foi realizado via [Trello / Jira / G
 
 ---
 
-## Histórias de Usuário (Padrão 3Cs)
+## Histórias de Usuário 
 
 Abaixo constam as 10 histórias de usuário detalhando as funcionalidades do sistema.
 
@@ -83,13 +86,13 @@ Abaixo constam as 10 histórias de usuário detalhando as funcionalidades do sis
 
 ---
 
-## Design e Prototipagem (Entrega 02)
+## Design e Prototipagem 
 
 ### Demonstração do Protótipo (Screencast)
-- Link para o vídeo: [LINK_DO_SEU_VIDEO]
+- Link para o vídeo: 
 
 ### Protótipo de Baixa Fidelidade (Figma)
-- Link para o projeto: [LINK_DO_SEU_FIGMA]
+- Link para o projeto: 
 
 
 Tela do game:
