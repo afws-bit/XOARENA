@@ -96,5 +96,7 @@ Abaixo constam as 10 histórias de usuário detalhando as funcionalidades do sis
 | US10 | [Link para Imagem] | [Link para Imagem] |
 
 
+Tela do game:
+
 <img width="1024" height="559" alt="image" src="https://github.com/user-attachments/assets/bd2f4d7c-1621-4551-ba2c-d037d35e96d9" />
 
