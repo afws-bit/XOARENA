@@ -1,123 +1,96 @@
-# 🗺️ Caçador de Relíquias em C++
+# Projeto Caçador de Relíquias em C++
 
-Este repositório contém o código-fonte de um jogo de aventura em terminal desenvolvido em C++, como parte das Entregas 01 e 02 da disciplina. O jogo consiste em navegar por um templo 5x5 usando um radar para encontrar um tesouro enquanto desvia de armadilhas mortais.
+Este repositório contém o código-fonte de um jogo de aventura em terminal desenvolvido em C++, como parte das Entregas 01 e 02 da disciplina. O sistema consiste em um motor de exploração onde o usuário navega por um ambiente 5x5 em busca de um objetivo oculto, utilizando lógica de detecção de proximidade.
 
 ---
 
-## 👥 Equipe e Papéis (Entrega 01)
+## Equipe e Papéis (Entrega 01)
 
 | Nome do Integrante | Papel no Projeto | Responsabilidades Principais |
 | :--- | :--- | :--- |
-| **[Nome do Aluno 1]** | Product Owner (PO) | Definir as histórias de usuário, priorizar o backlog e garantir a entrega de valor. |
-| **[Nome do Aluno 2]** | Scrum Master / Dev | Garantir a aplicação das práticas ágeis, remover impedimentos e auxiliar no desenvolvimento. |
-| **[Nome do Aluno 3]** | Desenvolvedor | Codificar a lógica de geração de mapa e movimentação em C++. |
-| **[Nome do Aluno 4]** | Desenvolvedor / QA | Desenvolver a interface no terminal, criar os diagramas e validar as regras de vitória/derrota. |
+| [Nome do Aluno 1] | Product Owner (PO) | Definição das histórias de usuário, priorização do backlog e garantia da entrega de valor. |
+| [Nome do Aluno 2] | Scrum Master / Dev | Aplicação das práticas ágeis, remoção de impedimentos e auxílio no desenvolvimento. |
+| [Nome do Aluno 3] | Desenvolvedor | Implementação da lógica de geração de mapa e algoritmos de movimentação. |
+| [Nome do Aluno 4] | Desenvolvedor / QA | Desenvolvimento da interface de terminal, criação de diagramas e validação de critérios de aceite. |
 
 ---
 
-## 📋 Board e Backlog (Entrega 01)
+## Gerenciamento do Projeto: Board e Backlog (Entrega 01)
 
-O gerenciamento do projeto foi feito utilizando [Trello / Jira / GitHub Projects]. 
-*As histórias abaixo estão listadas em ordem de prioridade (as mais críticas para o MVP do jogo estão no topo).*
+O gerenciamento do ciclo de vida do projeto foi realizado via [Trello / Jira / GitHub Projects]. As histórias de usuário estão listadas abaixo seguindo a prioridade técnica para o funcionamento do sistema (MVP).
 
-> **Acesso ao Quadro:** [Insira o link para o seu quadro do Trello/Jira aqui]
+> Acesso ao Quadro: [Insira o link para o seu quadro aqui]
 
-### Prints Comprobatórios
-*(Substitua os links abaixo pelas imagens reais dos seus prints do quadro)*
-- ![Print do Quadro Kanban](link_para_imagem_do_quadro.png)
-- ![Print do Backlog Priorizado](link_para_imagem_do_backlog.png)
+### Evidências do Processo Ágil
+- Imagem do Quadro Kanban: [link_para_imagem_do_quadro.png]
+- Imagem do Backlog Priorizado: [link_para_imagem_do_backlog.png]
 
 ---
 
-## 📖 Histórias de Usuário (Padrão 3Cs)
+## Histórias de Usuário (Padrão 3Cs)
 
-Abaixo estão as 10 histórias de usuário definidas para o escopo do nosso jogo, formatadas com o padrão **Cartão (Card)**, **Conversação (Conversation)** e **Confirmação (Confirmation)**.
+Abaixo constam as 10 histórias de usuário detalhando as funcionalidades do sistema.
 
-### US01: Exibição do Mapa Oculto (Prioridade Alta)
-- **Cartão (Card):** Como jogador, quero visualizar o mapa na tela, mas com as áreas inexploradas cobertas por névoa, para que o jogo tenha mistério.
-- **Conversação:** A matriz visual (`mapaTela`) será preenchida com caracteres `#`, exceto onde o jogador está (`P`). 
-- **Confirmação (Critérios de Aceite):**
-  1. O mapa 5x5 deve ser exibido a cada turno.
-  2. Elementos ocultos (Relíquia e Armadilhas) não devem aparecer visualmente na impressão da tela.
+### US01: Visualização do Mapa com Névoa
+- Card: Como jogador, desejo visualizar o mapa com áreas inexploradas ocultas para que o jogo apresente desafio de exploração.
+- Conversation: O mapa em tela utilizará o caractere '#' para representar áreas não visitadas e 'P' para a posição atual.
+- Confirmation: O grid 5x5 deve ser impresso a cada turno ocultando a relíquia e as armadilhas.
 
-### US02: Geração da Relíquia (Prioridade Alta)
-- **Cartão (Card):** Como sistema, quero posicionar a relíquia em um local aleatório do mapa no início da partida para que o jogo seja diferente a cada jogatina.
-- **Conversação:** Uso das funções `srand(time(0))` e `rand()` para definir as coordenadas X e Y da relíquia na matriz lógica, garantindo que não spawne na posição [0][0] onde o jogador nasce.
-- **Confirmação:**
-  1. A relíquia não pode iniciar nas coordenadas (0,0).
-  2. A posição deve ser registrada na variável ou matriz de controle.
+### US02: Posicionamento Aleatório da Relíquia
+- Card: Como sistema, devo posicionar o objetivo em coordenadas aleatórias para garantir a rejogabilidade.
+- Conversation: Utilização de sementes de tempo (srand) para definir X e Y, evitando a posição inicial (0,0).
+- Confirmation: A relíquia não deve ocupar a posição de spawn do jogador.
 
-### US03: Movimentação (WASD) (Prioridade Alta)
-- **Cartão (Card):** Como jogador, quero usar as teclas W, A, S, D para mover meu personagem ('P') pelas coordenadas da matriz.
-- **Conversação:** Entrada do usuário será lida em um `char`. O `switch` ou `if` atualizará as coordenadas `jogadorX` e `jogadorY`.
-- **Confirmação:**
-  1. Tecla 'W' diminui o índice da linha. 'S' aumenta a linha.
-  2. Tecla 'A' diminui o índice da coluna. 'D' aumenta a coluna.
+### US03: Interface de Movimentação (WASD)
+- Card: Como jogador, desejo utilizar as teclas W, A, S e D para controlar o personagem.
+- Conversation: O sistema interpretará caracteres de entrada para incrementar ou decrementar os índices da matriz.
+- Confirmation: O personagem deve atualizar sua posição conforme a tecla pressionada.
 
-### US04: Sistema de Radar (Prioridade Alta)
-- **Cartão (Card):** Como jogador, quero receber uma dica de distância (radar) a cada turno para saber se estou indo na direção certa do tesouro.
-- **Conversação:** O sistema calculará a distância de Manhattan: `abs(jogadorX - reliquiaX) + abs(jogadorY - reliquiaY)` e imprimirá a distância em número de passos.
-- **Confirmação:**
-  1. O texto do radar deve aparecer a cada movimentação.
-  2. O número de passos deve diminuir se o jogador andar em direção à relíquia.
+### US04: Sistema de Detecção (Radar)
+- Card: Como jogador, desejo receber informações de distância do objetivo para orientar minha navegação.
+- Conversation: Cálculo da distância de Manhattan entre as coordenadas do jogador e da relíquia.
+- Confirmation: O valor da distância deve ser exibido de forma legível após cada movimento.
 
-### US05: Validação de Bordas do Mapa (Prioridade Média)
-- **Cartão (Card):** Como jogador, quero ser impedido de sair dos limites do mapa 5x5 para não quebrar o jogo.
-- **Conversação:** Antes de atualizar a posição, verificar se a nova coordenada X ou Y será `< 0` ou `>= 5`. Se for, cancelar o movimento.
-- **Confirmação:**
-  1. Exibir a mensagem "Você bateu na parede do templo!" caso tente sair do mapa.
-  2. A posição original do jogador não é alterada.
+### US05: Restrição de Limites (Colisões)
+- Card: Como sistema, devo impedir que o jogador ultrapasse as bordas do mapa.
+- Conversation: Implementação de condicionais que validam se a nova coordenada está entre 0 e 4.
+- Confirmation: O sistema deve exibir mensagem de erro e manter o jogador na posição atual caso tente sair do grid.
 
-### US06: Condição de Vitória (Prioridade Alta)
-- **Cartão (Card):** Como jogador, quero que o jogo anuncie minha vitória imediatamente ao pisar no bloco que contém a relíquia.
-- **Conversação:** Após a movimentação, se a matriz lógica na posição `[jogadorX][jogadorY] == 'R'`, a variável booleana `venceu` fica verdadeira.
-- **Confirmação:**
-  1. O loop principal é quebrado.
-  2. Mensagem de vitória é exibida com sucesso na tela.
+### US06: Condição de Vitória
+- Card: Como jogador, desejo ser notificado da vitória ao alcançar a coordenada da relíquia.
+- Conversation: Verificação de igualdade entre as coordenadas do jogador e do objetivo após o movimento.
+- Confirmation: O loop do jogo deve ser encerrado e uma mensagem de sucesso exibida.
 
-### US07: Geração de Armadilhas (Prioridade Média)
-- **Cartão (Card):** Como sistema, quero espalhar aleatoriamente 3 armadilhas pelo mapa para aumentar o desafio da exploração.
-- **Conversação:** Loop que sorteia coordenadas e insere a letra 'T' na matriz lógica, validando para não sobrescrever a relíquia ou o início.
-- **Confirmação:**
-  1. A matriz de controle deve possuir exatamente três caracteres 'T'.
-  2. As armadilhas não são reveladas na tela padrão.
+### US07: Implementação de Armadilhas
+- Card: Como sistema, devo inserir obstáculos ocultos no mapa para aumentar o risco da exploração.
+- Conversation: Alocação de três pontos de falha (T) na matriz lógica de forma aleatória.
+- Confirmation: As armadilhas devem permanecer ocultas ao jogador até que ocorra a colisão.
 
-### US08: Condição de Derrota (Prioridade Alta)
-- **Cartão (Card):** Como jogador, quero que o jogo anuncie "Game Over" se eu pisar em uma armadilha oculta.
-- **Conversação:** Se a matriz lógica na posição `[jogadorX][jogadorY] == 'T'`, a variável booleana `vivo` fica falsa.
-- **Confirmação:**
-  1. O loop principal é quebrado instantaneamente.
-  2. Mensagem de derrota (KABUM!) é exibida.
+### US08: Condição de Derrota
+- Card: Como jogador, desejo que o jogo encerre caso eu encontre uma armadilha.
+- Conversation: Verificação de colisão com caracteres de dano na matriz lógica.
+- Confirmation: Exibição de mensagem de Game Over e encerramento do processo.
 
-### US09: Rastro de Exploração (Prioridade Baixa)
-- **Cartão (Card):** Como jogador, quero ver os lugares por onde já passei marcados com um '.' (ponto) para não me perder.
-- **Conversação:** Ao sair de uma coordenada atualizada com sucesso, o sistema substitui o antigo 'P' e a antiga '#' por um '.' na tela.
-- **Confirmação:**
-  1. Células já visitadas não mostram mais o caractere '#'.
-  2. Células visitadas exibem '.' mostrando que estão seguras.
+### US09: Rastro de Navegação
+- Card: Como jogador, desejo que o mapa registre as áreas já exploradas.
+- Conversation: Substituição do caractere '#' por '.' em todas as coordenadas já visitadas.
+- Confirmation: O rastro visual deve ser persistente durante a sessão de jogo.
 
-### US10: Interface e Comandos Inválidos (Prioridade Baixa)
-- **Cartão (Card):** Como jogador, quero ser notificado e manter meu turno caso eu digite uma tecla diferente de W, A, S ou D.
-- **Conversação:** Um `else` final na checagem de movimento vai capturar entradas estranhas (como X, K, 5).
-- **Confirmação:**
-  1. Exibir "Comando inválido!".
-  2. O jogador não se move e não ativa armadilhas nessa rodada.
+### US10: Tratamento de Entradas Inválidas
+- Card: Como sistema, devo ignorar comandos que não pertençam ao conjunto de movimentação.
+- Conversation: Implementação de cláusula default no tratamento de inputs para capturar teclas incorretas.
+- Confirmation: O jogo não deve processar o turno ou mover o jogador caso a tecla seja inválida.
 
 ---
 
-## 📊 Diagramas (Entrega 02)
+## Design e Prototipagem (Entrega 02)
 
-Para a Entrega 02, cada História de Usuário (US) possui um diagrama simplificado (UML/Fluxograma) ilustrando sua execução no código.
+### Demonstração do Protótipo (Screencast)
+- Link para o vídeo: [LINK_DO_SEU_VIDEO]
 
-*Nota: Você deve criar os diagramas (ex: Draw.io) e salvar na pasta `/diagramas` do repositório.*
+### Protótipo de Baixa Fidelidade (Figma)
+- Link para o projeto: [LINK_DO_SEU_FIGMA]
 
-- [Diagrama US01 - Exibir Mapa com Névoa](./diagramas/US01.png)
-- [Diagrama US02 - Spawn da Relíquia](./diagramas/US02.png)
-- [Diagrama US03 - Inputs e Movimento WASD](./diagramas/US03.png)
-- [Diagrama US04 - Cálculo do Radar](./diagramas/US04.png)
-- [Diagrama US05 - Colisão com Parede](./diagramas/US05.png)
-- [Diagrama US06 - Verificação de Vitória](./diagramas/US06.png)
-- [Diagrama US07 - Spawn das Armadilhas](./diagramas/US07.png)
-- [Diagrama US08 - Verificação de Derrota](./diagramas/US08.png)
-- [Diagrama US09 - Atualização de Rastro Visual](./diagramas/US09.png)
-- [Diagrama US10 - Tratamento de Tecla Inválida](./diagramas/US10.png)
+| US08 | [Link para Imagem] | [Link para Imagem] |
+| US09 | [Link para Imagem] | [Link para Imagem] |
+| US10 | [Link para Imagem] | [Link para Imagem] |
