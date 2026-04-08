@@ -22,8 +22,8 @@ O gerenciamento do ciclo de vida do projeto foi realizado via [Trello / Jira / G
 > Acesso ao Quadro: https://linear.app/xoarena/team/JOG/backlog
 
 ### Evidências do Processo Ágil
-- Imagem do Quadro Kanban: [link_para_imagem_do_quadro.png]
-- Imagem do Backlog Priorizado: [link_para_imagem_do_backlog.png]
+- Imagem do Quadro Kanban: <img width="1043" height="561" alt="Captura de tela 2026-04-08 171705" src="https://github.com/user-attachments/assets/0ece994c-a48b-4349-84e1-91987cbb3a6f" />
+
 
 ---
 
@@ -99,9 +99,5 @@ Abaixo constam as 10 histórias de usuário detalhando as funcionalidades do sis
 Tela do game:
 
 <img width="1024" height="559" alt="image" src="https://github.com/user-attachments/assets/bd2f4d7c-1621-4551-ba2c-d037d35e96d9" />
-
-Foto do board:
-
-<img width="1043" height="561" alt="image" src="https://github.com/user-attachments/assets/b31798ba-bee4-4e8a-88a4-74646b600231" />
 
 
