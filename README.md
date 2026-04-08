@@ -20,7 +20,7 @@ Este repositório contém o código-fonte de um jogo de aventura em terminal des
 
 ## Gerenciamento do Projeto: Board e Backlog 
 
-O gerenciamento do ciclo de vida do projeto foi realizado via [Trello / Jira / GitHub Projects]. As histórias de usuário estão listadas abaixo seguindo a prioridade técnica para o funcionamento do sistema (MVP).
+O gerenciamento do ciclo de vida do projeto foi realizado via [Linear]. As histórias de usuário estão listadas abaixo seguindo a prioridade técnica para o funcionamento do sistema (MVP).
 
 > Acesso ao Quadro: https://linear.app/xoarena/team/JOG/backlog
 
