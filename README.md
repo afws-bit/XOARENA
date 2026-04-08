@@ -10,15 +10,10 @@ Este repositório contém o código-fonte de um jogo de aventura em terminal des
 
  • Augusto Freitas  
  • João Lucas mendes 
- 
  • Caio Catão  
- 
  • Fernando Araújo 
- 
  • Glauberson  
- 
  • Gustavo Cassemiro  
- 
  • Daniel Massud  
 
 ---
