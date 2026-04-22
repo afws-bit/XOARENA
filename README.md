@@ -34,7 +34,7 @@ O gerenciamento do ciclo de vida do projeto foi realizado via [Linear]. As hist�
 - Link para o vídeo: 
 
 ### Protótipo de Baixa Fidelidade (Figma)
-- Link para o projeto: 
+- Link para o projeto: https://www.figma.com/design/vX3Ak107LvhA7SHgESZi5J/CA%C3%87ADORDEREL%C3%8DQUIAS?node-id=0-1&t=hXQNFMIpqkAoUZ5B-1
 
 
 Tela do game:
