@@ -36,6 +36,9 @@ O gerenciamento do ciclo de vida do projeto foi realizado via [Linear]. As hist√
 ### Prot√≥tipo de Baixa Fidelidade (Figma)
 - Link para o projeto: https://www.figma.com/design/vX3Ak107LvhA7SHgESZi5J/CA%C3%87ADORDEREL%C3%8DQUIAS?node-id=0-1&t=hXQNFMIpqkAoUZ5B-1
 
+## Diagrama de Atividades do Sistema
+ https://mermaid.ai/d/e56067d5-f495-403e-a9cb-0e5e20380ca9
+
 
 Tela do game:
 
