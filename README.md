@@ -8,12 +8,13 @@ Este repositório contém o código-fonte de um jogo de aventura em terminal des
 
 |Nome dos Integrantes| 
 
- • Augusto Freitas  
- • João Lucas mendes 
- • Fernando Araújo   
- • Gustavo Cassemiro  
- • Daniel Massud  
-
+ • Augusto Freitas
+ • Caio Catão
+ • Glaubersson
+ • João Lucas Mendes
+ • Daniel Massud
+ • Fernando Araújo
+ • Gustavo Cassemiro
 ---
 
 ## Gerenciamento do Projeto: Board e Backlog 
