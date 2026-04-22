@@ -24,7 +24,7 @@ O gerenciamento do ciclo de vida do projeto foi realizado via [Linear]. As hist�
 > Acesso ao Quadro: https://linear.app/xoarena/team/JOG/backlog
 
 ### Evidências do Processo Ágil
-- Imagem do Quadro Kanban: <img width="1043" height="561" alt="Captura de tela 2026-04-08 171705" src="https://github.com/user-attachments/assets/0ece994c-a48b-4349-84e1-91987cbb3a6f" />
+- Imagem do Quadro Kanban: <img width="1339" height="680" alt="image" src="https://github.com/user-attachments/assets/c44a3d18-737c-4e57-9d82-c79c323ca747" />
 
 ---
 
