@@ -6,7 +6,7 @@ Este repositório contém o código-fonte de um jogo de aventura em terminal des
 
 ## Equipe 
 
-|Nome dos Integrantes| 
+|Nomes dos Integrantes| 
 
  • Augusto Freitas
  • Caio Catão
