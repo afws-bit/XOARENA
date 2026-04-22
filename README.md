@@ -21,7 +21,7 @@ Este repositório contém o código-fonte de um jogo de aventura em terminal des
 
 O gerenciamento do ciclo de vida do projeto foi realizado via [Linear]. As histórias de usuário estão listadas abaixo seguindo a prioridade técnica para o funcionamento do sistema (MVP).
 
-> Acesso ao Quadro: https://linear.app/xoarena/team/CDR/projects/all
+> Acesso ao Quadro: https://linear.app/cacadordereliquia/team/CDR/projects/all
 
 ### Evidências do Processo Ágil
 - Imagem do Quadro Kanban: <img width="1339" height="680" alt="image" src="https://github.com/user-attachments/assets/c44a3d18-737c-4e57-9d82-c79c323ca747" />
