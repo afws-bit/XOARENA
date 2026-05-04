@@ -1,19 +1,13 @@
-# Projeto Dark Terminal em C
+# Dark Terminal
+**Dark Terminal** é um jogo de RPG desenvolvido em linguagem C para funcionar no terminal. No jogo, o jogador explora masmorras, enfrenta inimigos em batalhas por turnos, coleta itens e evolui seu personagem enquanto tenta sobreviver aos desafios do mundo sombrio do jogo.
 
----
-
-## Equipe 
-
-|Nomes dos Integrantes| 
-
- • Augusto Freitas
- • Caio Catão
- • Glauberson
- • João Lucas Mendes
- • Daniel Massud
- • Fernando Araújo
- • Gustavo Cassemiro
----
+## Equipe
+- João Lucas Mendes Dos Santos
+- Augusto Freitas
+- Daniel Luiz Massud
+- Fernando Antônio 
+- Gustavo Cassemiro
+- Glauberson 
 
 
 
