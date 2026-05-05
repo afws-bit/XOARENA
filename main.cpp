@@ -1,123 +1,230 @@
-    
-#include <iostream>
-#include <cmath>
-#include <cstdlib>
-#include <ctime>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <locale.h>
 
-using namespace std;
+#define ARQUIVO "historico.txt"
 
-const int TAMANHO = 5;
-int jogadorX, jogadorY;
-int reliquiaX, reliquiaY;
-bool vivo = true;
-bool venceu = false;
+typedef struct {
+    int hp;
+    int ataque;
+    int pocao;
+} Personagem;
 
-// Matrizes: uma com a lógica do jogo (escondida) e uma para a tela do jogador
-char mapaLogico[TAMANHO][TAMANHO];
-char mapaTela[TAMANHO][TAMANHO];
+typedef struct {
+    int venceu;
+    int turnos;
+} Sessao;
 
-void inicializarJogo() {
-    srand(time(0));
-    
-    // Preenche os mapas com espaços vazios e a névoa ('#')
-    for (int i = 0; i < TAMANHO; i++) {
-        for (int j = 0; j < TAMANHO; j++) {
-            mapaLogico[i][j] = '.';
-            mapaTela[i][j] = '#';
-        }
-    }
-
-    // Posiciona o jogador
-    jogadorX = 0;
-    jogadorY = 0;
-    mapaTela[jogadorX][jogadorY] = 'P';
-
-    // Posiciona a relíquia (longe do [0][0])
-    do {
-        reliquiaX = rand() % TAMANHO;
-        reliquiaY = rand() % TAMANHO;
-    } while (reliquiaX == 0 && reliquiaY == 0);
-    mapaLogico[reliquiaX][reliquiaY] = 'R';
-
-    // Posiciona 3 armadilhas aleatórias
-    int armadilhasColocadas = 0;
-    while (armadilhasColocadas < 3) {
-        int ax = rand() % TAMANHO;
-        int ay = rand() % TAMANHO;
-        if ((ax != 0 || ay != 0) && mapaLogico[ax][ay] == '.') {
-            mapaLogico[ax][ay] = 'T'; // T de Trap (Armadilha)
-            armadilhasColocadas++;
-        }
-    }
+// ================= LIMPAR TELA =================
+void limparTela() {
+#ifdef _WIN32
+    system("cls");
+#else
+    system("clear");
+#endif
 }
 
-void desenharMapa() {
-    cout << "\n=== CACADOR DE RELIQUIAS ===\n";
-    cout << "Legenda: P = Voce | # = Nevoa | . = Caminho Livre\n";
-    for (int i = 0; i < TAMANHO; i++) {
-        for (int j = 0; j < TAMANHO; j++) {
-            cout << mapaTela[i][j] << " ";
-        }
-        cout << "\n";
-    }
-
-  
-    int distanciaRadar = abs(jogadorX - reliquiaX) + abs(jogadorY - reliquiaY);
-    cout << "RADAR: O tesouro esta a " << distanciaRadar << " passos de distancia!\n";
+// ================= INIMIGO =================
+Personagem gerarInimigo() {
+    Personagem inimigo;
+    inimigo.hp = rand() % 30 + 20;
+    inimigo.ataque = rand() % 8 + 3;
+    inimigo.pocao = 0;
+    return inimigo;
 }
 
-void moverJogador(char direcao) {
-    int novoX = jogadorX;
-    int novoY = jogadorY;
+// ================= SALVAR =================
+void salvarHistorico(Sessao s) {
+    FILE *f = fopen(ARQUIVO, "a");
 
-    if (direcao == 'w' || direcao == 'W') novoX--;
-    else if (direcao == 's' || direcao == 'S') novoX++;
-    else if (direcao == 'a' || direcao == 'A') novoY--;
-    else if (direcao == 'd' || direcao == 'D') novoY++;
-    else {
-        cout << "Comando invalido!\n";
+    if (!f) {
+        printf("Erro ao salvar historico!\n");
         return;
     }
 
-    // Valida limites do mapa
-    if (novoX < 0 || novoX >= TAMANHO || novoY < 0 || novoY >= TAMANHO) {
-        cout << "Voce bateu na parede do templo!\n";
+    fprintf(f, "%d %d\n", s.venceu, s.turnos);
+    fclose(f);
+}
+
+// ================= ANALISAR =================
+void analisarHistorico() {
+    limparTela();
+
+    FILE *f = fopen(ARQUIVO, "r");
+
+    if (!f) {
+        printf("\nNenhum historico encontrado.\n");
         return;
     }
 
-    // Atualiza rastro
-    mapaTela[jogadorX][jogadorY] = '.';
-    
-    // Atualiza posição
-    jogadorX = novoX;
-    jogadorY = novoY;
-    mapaTela[jogadorX][jogadorY] = 'P';
+    int venceu, turnos;
+    int total = 0, vitorias = 0, somaTurnos = 0;
 
-    // Verifica colisões no mapa
-    if (mapaLogico[jogadorX][jogadorY] == 'R') {
-        venceu = true;
-    } else if (mapaLogico[jogadorX][jogadorY] == 'T') {
-        vivo = false;
+    while (fscanf(f, "%d %d", &venceu, &turnos) != EOF) {
+        total++;
+        somaTurnos += turnos;
+        if (venceu) vitorias++;
     }
+
+    fclose(f);
+
+    if (total == 0) {
+        printf("\nSem dados ainda.\n");
+        return;
+    }
+
+    printf("=== ANALISE ===\n");
+    printf("Partidas jogadas: %d\n", total);
+    printf("Vitorias: %d\n", vitorias);
+    printf("Derrotas: %d\n", total - vitorias);
+    printf("Taxa de vitoria: %.2f%%\n", (vitorias * 100.0) / total);
+    printf("Media de turnos: %.2f\n", (float)somaTurnos / total);
 }
 
-int main() {
-    inicializarJogo();
+// ================= BATALHA =================
+Sessao batalha() {
+    Personagem player = {100, 10, 3};
+    Personagem inimigo = gerarInimigo();
 
-    while (vivo && !venceu) {
-        desenharMapa();
-        cout << "\nMovimento (W=Cima, S=Baixo, A=Esquerda, D=Direita): ";
-        char comando;
-        cin >> comando;
-        moverJogador(comando);
+    Sessao s;
+    s.turnos = 0;
+
+    int escolha;
+
+    limparTela();
+    printf("Um inimigo apareceu!\n");
+    printf("Dica: Derrote o inimigo usando ataques e pocoes.\n");
+    printf("Pressione ENTER para comecar...");
+    getchar(); getchar();
+
+    while (player.hp > 0 && inimigo.hp > 0) {
+        limparTela();
+
+        s.turnos++;
+
+        printf("=== BATALHA ===\n");
+        printf("Seu HP: %d | Inimigo: %d\n", player.hp, inimigo.hp);
+
+        // ===== DICAS =====
+        printf("\n--- DICAS ---\n");
+
+        if (player.hp < 30 && player.pocao > 0)
+            printf("Seu HP esta baixo! Use uma pocao.\n");
+
+        if (player.pocao == 0 && player.hp < 40)
+            printf("Voce esta sem pocoes! Tome cuidado.\n");
+
+        if (inimigo.hp < 15)
+            printf("O inimigo esta fraco! Ataque agora.\n");
+
+        if (player.hp > 70)
+            printf("Voce esta forte! Continue atacando.\n");
+
+        printf("-------------\n");
+
+        printf("\n1. Atacar\n2. Usar pocao (%d)\n3. Fugir\n", player.pocao);
+        printf("Escolha: ");
+        scanf("%d", &escolha);
+
+        switch (escolha) {
+            case 1: {
+                int dano = player.ataque + rand() % 5;
+                inimigo.hp -= dano;
+                printf("Voce causou %d de dano!\n", dano);
+                break;
+            }
+
+            case 2:
+                if (player.pocao > 0) {
+                    player.hp += 15;
+                    player.pocao--;
+                    printf("Voce recuperou vida!\n");
+                } else {
+                    printf("Sem pocoes!\n");
+                }
+                break;
+
+            case 3:
+                printf("Voce fugiu!\n");
+                s.venceu = 0;
+                return s;
+
+            default:
+                printf("Opcao invalida!\n");
+        }
+
+        if (inimigo.hp > 0) {
+            int dano = inimigo.ataque + rand() % 5;
+            player.hp -= dano;
+            printf("Inimigo causou %d de dano!\n", dano);
+        }
+
+        printf("\nPressione ENTER para continuar...");
+        getchar(); getchar();
     }
 
-    cout << "\n=== FIM DE JOGO ===\n";
-    if (venceu) {
-        cout << "PARABENS! Voce encontrou a Reliquia Sagrada!\n";
+    limparTela();
+
+    if (player.hp > 0) {
+        printf("Vitoria!\n");
+        s.venceu = 1;
     } else {
-        cout << "KABUM! Voce pisou em uma armadilha oculta e morreu.\n";
+        printf("Derrota...\n");
+        s.venceu = 0;
     }
+
+    printf("\nPressione ENTER para voltar ao menu...");
+    getchar(); getchar();
+
+    return s;
+}
+
+// ================= JOGO =================
+void jogar() {
+    Sessao s = batalha();
+    salvarHistorico(s);
+}
+
+// ================= MAIN =================
+int main() {
+    setlocale(LC_ALL, "");
+
+    srand(time(NULL));
+
+    int opcao;
+
+    do {
+        limparTela();
+
+        printf("=== DARK TERMINAL ===\n");
+        printf("1. Jogar\n");
+        printf("2. Analisar historico\n");
+        printf("3. Sair\n");
+        printf("Escolha: ");
+        scanf("%d", &opcao);
+
+        switch (opcao) {
+            case 1:
+                jogar();
+                break;
+
+            case 2:
+                analisarHistorico();
+                printf("\nPressione ENTER para voltar...");
+                getchar(); getchar();
+                break;
+
+            case 3:
+                printf("Saindo...\n");
+                break;
+
+            default:
+                printf("Opcao invalida!\n");
+                getchar(); getchar();
+        }
+
+    } while (opcao != 3);
 
     return 0;
 }
