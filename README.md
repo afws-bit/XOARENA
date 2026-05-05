@@ -7,7 +7,8 @@
 - Daniel Luiz Massud
 - Fernando Antônio 
 - Gustavo Cassemiro
-- Glauberson 
+- Glauberson
+- Caio Catão
 
 
 
