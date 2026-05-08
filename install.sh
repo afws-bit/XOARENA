@@ -25,12 +25,43 @@ BINARY_NAME="spane"
 BUILD_DIR="/tmp/spane_build_$$"
 
 WEB_MODE=false
+WSL_MODE=false
 
 if [ "$(id -u)" = "0" ]; then
     SUDO=""
 else
     SUDO="sudo"
 fi
+
+# =============================================================================
+# DETECTION FUNCTIONS
+# =============================================================================
+
+detect_wsl() {
+    if grep -qi microsoft /proc/version 2>/dev/null || grep -qi wsl /proc/version 2>/dev/null; then
+        WSL_MODE=true
+        return 0
+    fi
+    return 1
+}
+
+detect_package_manager() {
+    if command_exists apk; then
+        echo "apk"
+    elif command_exists apt-get; then
+        echo "apt-get"
+    elif command_exists dnf; then
+        echo "dnf"
+    elif command_exists yum; then
+        echo "yum"
+    elif command_exists pacman; then
+        echo "pacman"
+    elif command_exists zypper; then
+        echo "zypper"
+    else
+        echo "unknown"
+    fi
+}
 
 # =============================================================================
 # FUNCTIONS
@@ -59,42 +90,41 @@ install_build_tools() {
     fi
     
     log_message "Installing build tools..."
+    local pkg_manager=$(detect_package_manager)
     
-    if command_exists apk; then
-        log_message "Detected Alpine Linux"
-        $SUDO apk update 2>/dev/null && $SUDO apk add build-base 2>/dev/null && { log_message "✓ Build tools installed"; return 0; }
-        $SUDO apk add gcc musl-dev 2>/dev/null && { log_message "✓ Minimal build tools installed"; return 0; }
-        log_message "✗ Failed to install via apk"
-        exit 1
-    fi
-    
-    if command_exists apt-get; then
-        $SUDO apt-get update -y 2>/dev/null && $SUDO apt-get install -y gcc build-essential 2>/dev/null && { log_message "✓ Build tools installed"; return 0; }
-        exit 1
-    fi
-    
-    if command_exists dnf; then
-        $SUDO dnf install -y gcc make 2>/dev/null && { log_message "✓ Build tools installed"; return 0; }
-        exit 1
-    fi
-    
-    if command_exists yum; then
-        $SUDO yum install -y gcc make 2>/dev/null && { log_message "✓ Build tools installed"; return 0; }
-        exit 1
-    fi
-    
-    if command_exists pacman; then
-        $SUDO pacman -S --noconfirm base-devel 2>/dev/null && { log_message "✓ Build tools installed"; return 0; }
-        exit 1
-    fi
-    
-    if command_exists zypper; then
-        $SUDO zypper install -y gcc make 2>/dev/null && { log_message "✓ Build tools installed"; return 0; }
-        exit 1
-    fi
-    
-    log_message "✗ Unknown package manager"
-    exit 1
+    case "$pkg_manager" in
+        apk)
+            log_message "Detected Alpine Linux"
+            $SUDO apk update 2>/dev/null && $SUDO apk add build-base 2>/dev/null && { log_message "✓ Build tools installed"; return 0; }
+            $SUDO apk add gcc musl-dev 2>/dev/null && { log_message "✓ Minimal build tools installed"; return 0; }
+            log_message "✗ Failed to install via apk"
+            exit 1
+            ;;
+        apt-get)
+            $SUDO apt-get update -y 2>/dev/null && $SUDO apt-get install -y gcc build-essential 2>/dev/null && { log_message "✓ Build tools installed"; return 0; }
+            exit 1
+            ;;
+        dnf)
+            $SUDO dnf install -y gcc make 2>/dev/null && { log_message "✓ Build tools installed"; return 0; }
+            exit 1
+            ;;
+        yum)
+            $SUDO yum install -y gcc make 2>/dev/null && { log_message "✓ Build tools installed"; return 0; }
+            exit 1
+            ;;
+        pacman)
+            $SUDO pacman -S --noconfirm base-devel 2>/dev/null && { log_message "✓ Build tools installed"; return 0; }
+            exit 1
+            ;;
+        zypper)
+            $SUDO zypper install -y gcc make 2>/dev/null && { log_message "✓ Build tools installed"; return 0; }
+            exit 1
+            ;;
+        *)
+            log_message "✗ Unknown package manager"
+            exit 1
+            ;;
+    esac
 }
 
 install_x11_libs() {
@@ -106,21 +136,89 @@ install_x11_libs() {
     fi
     
     log_message "Installing X11..."
+    local pkg_manager=$(detect_package_manager)
     
-    if command_exists apk; then
-        $SUDO apk add libx11-dev 2>/dev/null
-    elif command_exists apt-get; then
-        $SUDO apt-get install -y libx11-dev 2>/dev/null
-    elif command_exists dnf; then
-        $SUDO dnf install -y libX11-devel 2>/dev/null
-    elif command_exists yum; then
-        $SUDO yum install -y libX11-devel 2>/dev/null
-    elif command_exists pacman; then
-        $SUDO pacman -S --noconfirm libx11 2>/dev/null
-    fi
+    case "$pkg_manager" in
+        apk)
+            $SUDO apk add libx11-dev 2>/dev/null
+            ;;
+        apt-get)
+            $SUDO apt-get install -y libx11-dev 2>/dev/null
+            ;;
+        dnf)
+            $SUDO dnf install -y libX11-devel 2>/dev/null
+            ;;
+        yum)
+            $SUDO yum install -y libX11-devel 2>/dev/null
+            ;;
+        pacman)
+            $SUDO pacman -S --noconfirm libx11 2>/dev/null
+            ;;
+        zypper)
+            $SUDO zypper install -y libX11-devel 2>/dev/null
+            ;;
+    esac
     
     [ -f "/usr/include/X11/Xlib.h" ] && { log_message "✓ X11 installed"; return 0; }
     log_message "⚠ No X11 - web-only build"
+    return 1
+}
+
+install_zenity() {
+    log_message "WSL detected - checking zenity..."
+    
+    if command_exists zenity; then
+        log_message "✓ zenity already installed"
+        return 0
+    fi
+    
+    log_message "Installing zenity for WSL..."
+    local pkg_manager=$(detect_package_manager)
+    
+    case "$pkg_manager" in
+        apk)
+            if $SUDO apk add zenity 2>/dev/null; then
+                log_message "✓ zenity installed"
+                return 0
+            fi
+            ;;
+        apt-get)
+            if $SUDO apt-get update -y 2>/dev/null && $SUDO apt-get install -y zenity 2>/dev/null; then
+                log_message "✓ zenity installed"
+                return 0
+            fi
+            ;;
+        dnf)
+            if $SUDO dnf install -y zenity 2>/dev/null; then
+                log_message "✓ zenity installed"
+                return 0
+            fi
+            ;;
+        yum)
+            if $SUDO yum install -y zenity 2>/dev/null; then
+                log_message "✓ zenity installed"
+                return 0
+            fi
+            ;;
+        pacman)
+            if $SUDO pacman -S --noconfirm zenity 2>/dev/null; then
+                log_message "✓ zenity installed"
+                return 0
+            fi
+            ;;
+        zypper)
+            if $SUDO zypper install -y zenity 2>/dev/null; then
+                log_message "✓ zenity installed"
+                return 0
+            fi
+            ;;
+        *)
+            log_message "⚠ Could not install zenity - unknown package manager"
+            return 1
+            ;;
+    esac
+    
+    log_message "⚠ Failed to install zenity"
     return 1
 }
 
@@ -387,6 +485,12 @@ echo "║  SPANE Game Engine Installer   ║"
 echo "╚════════════════════════════════╝"
 echo ""
 
+# Detect WSL
+detect_wsl
+if [ "$WSL_MODE" = true ]; then
+    log_message "WSL environment detected"
+fi
+
 if [ -d "$INSTALL_DIR" ]; then
     log_message "Existing installation found"
     printf "[1]=Update [2]=Remove [3]=Exit: "
@@ -402,6 +506,11 @@ install_build_tools
 
 if [ "$WEB_MODE" = false ]; then
     install_x11_libs
+fi
+
+# Install zenity if running in WSL
+if [ "$WSL_MODE" = true ]; then
+    install_zenity
 fi
 
 rm -rf "$BUILD_DIR"
@@ -430,9 +539,14 @@ if compile_engine "$src"; then
     echo "╔════════════════════════════════╗"
     echo "║    Installation Complete!      ║"
     echo "║                                ║"
-    has_x11 && echo "║  spane          X11 mode       ║"
+    if has_x11; then
+        echo "║  spane          X11 mode       ║"
+    fi
     echo "║  spane --web    Web mode       ║"
     echo "║  Games: $games                    ║"
+    if [ "$WSL_MODE" = true ]; then
+        echo "║  WSL: zenity enabled           ║"
+    fi
     echo "╚════════════════════════════════╝"
     echo ""
 else
