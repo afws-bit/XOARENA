@@ -864,6 +864,19 @@ static void whandle(WebServer* w, int cf) {
         if (strcmp(t, "m") == 0) {
             w->gm->mouse_x = x;
             w->gm->mouse_y = y;
+            // Add hover detection - same logic as X11 version
+            w->gm->hover_button = -1;
+            if (x < SIDEBAR_WIDTH) {
+                int by = 55;
+                for (int i = 0; i < w->gm->game_count; i++) {
+                    if (y >= by && y < by+35 
+                        && x >= 10 && x < SIDEBAR_WIDTH-25) {
+                        w->gm->hover_button = i;
+                        break;
+                    }
+                    by += 45;
+                }
+            }
         }
         else if (strcmp(t, "c") == 0) {
             gm_click(w->gm, x, y);
