@@ -694,16 +694,43 @@ static int x11_init(GameManager* gm) {
 }
 
 static int x11_to_keycode(KeySym ks) {
+    // Function keys
     if (ks == XK_Escape) return 27;
-    if (ks == XK_F1) return 112; if (ks == XK_F2) return 113;
-    if (ks == XK_F3) return 114; if (ks == XK_F4) return 115;
+    if (ks >= XK_F1 && ks <= XK_F12) return 111 + (ks - XK_F1);
+    
+    // Cursor keys
     if (ks == XK_Up || ks == XK_w || ks == XK_W) return 38;
     if (ks == XK_Down || ks == XK_s || ks == XK_S) return 40;
     if (ks == XK_Left || ks == XK_a || ks == XK_A) return 37;
     if (ks == XK_Right || ks == XK_d || ks == XK_D) return 39;
-    if (ks == XK_r || ks == XK_R) return 82;
-    if (ks == XK_Return) return 13; if (ks == XK_space) return 32;
-    return 0;
+    
+    // Modifier/action keys
+    if (ks == XK_Return || ks == XK_KP_Enter) return 13;
+    if (ks == XK_space || ks == XK_KP_Space) return 32;
+    if (ks == XK_BackSpace) return 8;
+    if (ks == XK_Delete || ks == XK_KP_Delete) return 127;
+    if (ks == XK_Tab) return 9;
+    if (ks == XK_Shift_L || ks == XK_Shift_R) return 16;
+    if (ks == XK_Control_L || ks == XK_Control_R) return 17;
+    
+    // Alphanumeric keys (A-Z)
+    if (ks >= XK_A && ks <= XK_Z) return 'A' + (ks - XK_A);
+    if (ks >= XK_a && ks <= XK_z) return 'A' + (ks - XK_a);
+    
+    // Main keyboard numbers (0-9)
+    if (ks >= XK_0 && ks <= XK_9) return '0' + (ks - XK_0);
+    
+    // Keypad numbers
+    if (ks >= XK_KP_0 && ks <= XK_KP_9) return '0' + (ks - XK_KP_0);
+    
+    // Keypad operators
+    if (ks == XK_KP_Add) return '+';
+    if (ks == XK_KP_Subtract) return '-';
+    if (ks == XK_KP_Multiply) return '*';
+    if (ks == XK_KP_Divide) return '/';
+    if (ks == XK_KP_Decimal) return '.';
+    
+    return 0;  // Unknown key
 }
 
 static void x11_process(GameManager* gm, int* running) {
